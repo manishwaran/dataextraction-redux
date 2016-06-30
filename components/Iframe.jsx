@@ -13,7 +13,8 @@ class Iframe extends React.Component{
   }
   onFrameLoaded(frame){
     var that = this;
-      $(frame).contents().click(function(e){
+      $("#myIframe").contents().click(function(e){
+        e.preventDefault();
         var output={}
         var cssSelector=cssPath(e.target, $);
         var uniqueCssSelector=cssSelector
@@ -35,6 +36,9 @@ class Iframe extends React.Component{
           "attr": str
         }
         that.props.onSelect(output);
+        // alert("iframe")
+        // console.log(output);
+        // console.log(frame);
       });
     }
     render() {

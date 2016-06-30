@@ -9,12 +9,13 @@ export default class ResultBox extends React.Component{
     result: PropTypes.array.isRequired
   }
   render() {
+    console.log(this.props);
     var createDivision = function(item,i) {
       return(
         <div>
         <h4>
           <div className="badge" style={{padding:10}}>Result :{i+1}</div>
-          <div className="label label-info" style={{padding:10}} >  {item.val} </div>
+          <div className="well"> {item.val} </div>
         </h4>
         </div>
       );

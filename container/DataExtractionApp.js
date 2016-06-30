@@ -10,30 +10,36 @@ import Iframe from '../components/Iframe.jsx';
 import AppendItem from '../components/AppendItem.jsx';
 import cssPath from '../components/utils/css-path'
 
-@connect(state => ({
-  dataExtractState: state.dataExtractState
-}))
+@connect(state => {
+  const { jsonInput, jsonOutput, url, rawData } = state;
+  return {
+    jsonOutput,
+    jsonInput,
+    url,
+    rawData
+  }
+})
+
 export default class DataExtractionApp extends React.Component{
 
   static propTypes = {
     url: PropTypes.string.isRequired,
     rawData: PropTypes.string.isRequired,
-    jsonInput: PropTypes.object.isRequired,
-    jsonOutput: PropTypes.object.isRequired,
+    jsonInput: PropTypes.array.isRequired,
+    jsonOutput: PropTypes.array.isRequired,
     dispatch: PropTypes.func.isRequired
   }
 
   render(){
-    console.log('this.props')
-    console.log(this.props)
-    // debugger;
-    const { dataExtractState, dispatch } = this.props;
+    console.log("this.props.jsonOutput");
+    console.log(this.props.jsonOutput);
+    const { jsonOutput, jsonInput, rawData, url, dispatch } = this.props;
 
     const actions = bindActionCreators(DataExtractActions, dispatch);
     return(
        <div>
         <div className="row">
-          <UrlBox load = { actions.loadUrl } val = { dataExtractState.url } />
+          <UrlBox load = { actions.loadUrl } val = { url } />
         </div>
         <div className="row" style={{padding:25}}>
           <div  className="col col-lg-7" >``
@@ -41,11 +47,11 @@ export default class DataExtractionApp extends React.Component{
               <Iframe onSelect={actions.iframeClick}/>
             </div>
             <div className="row">
-              <ResultBox result={dataExtractState.jsonOutput}/>
+              <ResultBox result={jsonOutput}/>
             </div>
           </div>
           <div className="col col-lg-4">
-            <LeftPanel jsonData={dataExtractState.jsonInput} actions={actions} />
+            <LeftPanel jsonData={jsonInput} actions={actions} />
           </div>
         </div>
        </div>

@@ -1,1 +1,3 @@
-export { default as dataExtractState } from './dataExtract-reducer';
+import dataExtract from './dataExtract-reducer';
+
+export default dataExtract

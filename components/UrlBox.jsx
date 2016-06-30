@@ -8,14 +8,17 @@ class UrlBox extends React.Component{
       url: ""
     }
   }
+
   handleChange(event) {
     this.setState({ url: event.target.value });
   }
+
   submitUrl(e){
    e.preventDefault();
    this.props.load(this.state.url);
    this.setState({ url:"" })
   }
+  
   render() {
     return (
       <form id="myform" className="well clearfix">

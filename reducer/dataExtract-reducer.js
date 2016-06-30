@@ -3,46 +3,36 @@ import * as types from '../constants/actionTypes';
 const initialState = {
   url: "",
   rawData: "",
-  jsonInput: [
-    {
-      css: "css1",
-      attr: "attr1"
-    },
-    {
-      css: "css2",
-      attr: "attr2"
-    }
-  ],
-  jsonOutput: [
-    {
-      val: "v1"
-    },
-    {
-      val: "v2"
-    }
-  ]
+  jsonInput: [],
+  jsonOutput: []
 }
 
 export default function dataExtract(state = initialState, action) {
   switch (action.type) {
     case types.LOAD_URL:
-      fetch('/loadwebpage', {
-        method: 'post',
-        body: JSON.stringify({
-          url: action.url
-        })
-      }).then(response => {
-        debugger;
-        return {
-          ...state,
-          url: action.url,
-          rawData: response.text()
-        };
-        // $('#myIframe').contents().find('body').html();
+      // console.log(state)
+      // console.log(action)
+      // fetch('/loadwebpage', {
+      //   method: 'post',
+      //   body: JSON.stringify({
+      //     url: action.url
+      //   })
+      // }).then(response => {
+      //   return {
+      //     ...state,
+      //     url: action.url,
+      //     rawData: response.text()
+      //   };
+      //   // $('#myIframe').contents().find('body').html();
+      // })
+      $.post("/loadwebpage",{"url":action.url},function(data, status){
+        $('#myIframe').contents().find('body').html(data);
       })
-      // $.post("/loadwebpage",{"url":state.url},function(data, status){
-      //   $('#myIframe').contents().find('body').html(data);
-      //
+      return {
+        ...state,
+        url: action.url
+      };
+      break;
     case types.ADD:
       var obj={};
       obj.css="";
@@ -57,19 +47,28 @@ export default function dataExtract(state = initialState, action) {
         jsonInput: state.jsonInput.slice(0,Object.keys(state.jsonInput).length-1).concat(action.obj)
       };
     case types.EXECUTE:
-      fetch('/getresult', {
-        method: 'post',
-        body: {
-          data: JSON.stringify(state.jsonInput)
-        }
-      }).then(response => {
+    // var globaldata=[];
+
+      // return {
+      //   ...state,
+        // jsonOutput: [
+        //   {
+        //     val: 'Some value'
+        //   }
+        // ]
+      // }
+      // debugger;
+
+      // $.post("/getresult",{data: JSON.stringify(state.jsonInput)},function(data, status){
+      // });
+
+      // $.post("/getresult",{data: JSON.stringify(state.jsonInput)},function(data, status){
+      //   console.log("data");
+      //   console.log(data);
         return {
           ...state,
-          jsonOutput: response.json()
+          jsonOutput: action.json
         }
-        // return Object.assign({},state,{jsonOutput: data});
-      })
-      // $.post("/getresult",{data: JSON.stringify(state.jsonInput)},function(data, status){
       // });
     case types.CLEAR:
       return{

@@ -21,10 +21,24 @@ export function iframeClick(obj) {
 }
 
 export function execute(jsonInput) {
-  return {
-    type: types.EXECUTE,
-    jsonInput
-  }
+  return dispatch => fetch('/getresult', {
+    method: 'post',
+    body: JSON.stringify({
+      data: jsonInput
+    })
+  })
+  .then(response => response.json())
+  .then(json =>
+    dispatch({
+      type: types.EXECUTE,
+      json
+    })
+  )
+
+  // return {
+  //   type: types.EXECUTE,
+  //   jsonInput
+  // }
 }
 
 export function clear() {
