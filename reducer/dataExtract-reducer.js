@@ -47,29 +47,10 @@ export default function dataExtract(state = initialState, action) {
         jsonInput: state.jsonInput.slice(0,Object.keys(state.jsonInput).length-1).concat(action.obj)
       };
     case types.EXECUTE:
-    // var globaldata=[];
-
-      // return {
-      //   ...state,
-        // jsonOutput: [
-        //   {
-        //     val: 'Some value'
-        //   }
-        // ]
-      // }
-      // debugger;
-
-      // $.post("/getresult",{data: JSON.stringify(state.jsonInput)},function(data, status){
-      // });
-
-      // $.post("/getresult",{data: JSON.stringify(state.jsonInput)},function(data, status){
-      //   console.log("data");
-      //   console.log(data);
         return {
           ...state,
           jsonOutput: action.json
         }
-      // });
     case types.CLEAR:
       return{
         ...state,
